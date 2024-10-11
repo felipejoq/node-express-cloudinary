@@ -1,12 +1,13 @@
-import { envs } from './config/plugins/envs.js';
+import { envsPlugin } from './config/plugins/envs.plugin.js';
 import {Server} from "./Server.js";
 import {AppRouter} from "./routes/v1/app.routes.js";
+import {Encoder} from "./config/plugins/encoder.plugin.js";
 
 
 // Función de arranque.
 const main = async () => {
   const server = new Server({
-    port: envs.PORT,
+    port: envsPlugin.PORT,
     routes: AppRouter.routes,
     acceptedOrigins: [],
   });
