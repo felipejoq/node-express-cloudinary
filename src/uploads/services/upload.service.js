@@ -1,9 +1,14 @@
 import {CustomError} from "../../config/errors/custom.error.js";
 
 export class UploadService {
+
+  constructor(cloudinaryService) {
+    this.cloudinaryService = cloudinaryService;
+  }
+
   async uploadImage({
     file,
-    validExtensions = ['jpg', 'jpeg', 'png', 'webp'],
+    validExtensions = ['jpg', 'jpeg', 'png'],
   }) {
 
     if(!file) {
@@ -17,9 +22,7 @@ export class UploadService {
         .badRequest(`Extensión inválida: ${fileExtension}, extensiones válidas: ${validExtensions.join(', ')}`);
     }
 
-    return {
-      ok: true
-    }
+    return await this.cloudinaryService.uploadImage({file});
 
   }
 }

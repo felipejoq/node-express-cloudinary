@@ -1,6 +1,7 @@
 import { CustomError } from "./custom.error.js";
 
 export const handleError = (error, res) => {
+  console.log('error', error);
   if (error instanceof CustomError) {
     return res.status(error.statusCode).json({ error: error.message });
   }
