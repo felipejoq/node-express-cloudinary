@@ -11,7 +11,6 @@ export class FilesMiddleware {
       req.body.files = req.files.file;
     }
 
-    console.log(req.body.files);
     next();
   }
 }
