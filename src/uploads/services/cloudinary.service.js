@@ -36,8 +36,12 @@ export class CloudinaryService {
       effect: `gen_background_replace:prompt_an ${prompt}`,
     });
 
+    const regex = /src=['"]([^'"]*)['"]/;
+    const urlModified = imageModified.match(regex)[1];
+
+
     return {
-      image: JSON.stringify(imageModified),
+      image: urlModified,
       url: respCloudinary.secure_url,
       public_id: respCloudinary.public_id,
       story,
