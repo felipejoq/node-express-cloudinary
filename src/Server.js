@@ -1,4 +1,5 @@
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import {CorsMiddleware} from "./middlewares/cors.middleware.js";
 
 export class Server {
@@ -17,6 +18,15 @@ export class Server {
     this.app.use(express.json()) // Texto plano raw
     this.app.use(express.urlencoded({extended: true}));
     this.app.disable('x-powered-by');
+
+    // File upload middleware configuration
+    this.app.use(fileUpload({
+      limits: { fileSize: 50 * 1024 * 1024 },
+      abortOnLimit: true,
+      useTempFiles: true,
+      tempFileDir: '/tmp/',
+      responseOnLimit: `El archivo excede el tamaño permitido ${50 * 1024 * 1024} bytes`
+    }))
 
     // * Public folders
     this.app.use(express.static(this.publicPath));

@@ -2,6 +2,7 @@ import { Router } from "express";
 import {UploadService} from "../services/upload.service.js";
 import {UploadController} from "../controllers/upload.controller.js";
 import {AuthMiddleware} from "../../middlewares/auth.middleware.js";
+import {FilesMiddleware} from "../../middlewares/files.middleware.js";
 
 export class UploadRouter {
   static get routes() {
@@ -12,7 +13,10 @@ export class UploadRouter {
 
     const {validateJWT} = AuthMiddleware;
 
-    uploadRouter.get('/',[validateJWT], uploadController.uploadImage.bind(uploadController));
+    uploadRouter.use(validateJWT);
+    uploadRouter.use(FilesMiddleware.containFiles);
+
+    uploadRouter.post('/', uploadController.uploadImage.bind(uploadController));
 
     return uploadRouter;
   }
